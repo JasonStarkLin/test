@@ -62,8 +62,8 @@ def ExFolderConstr(Con_folder):
 
 
 
-folder = "X:\\Raw Data\\2020\\20201119\\Speed Distribution\\"
-SampleName = '20201119-BE-Ibidi-850585'
+folder = "D:\\NAS-TEMP_BE\\SpeedDistribution Debug\\"
+SampleName = 'Debug results'
 #folder = "D:\\NAS-TEMP_BE\\20200926\\Speed distribution\\"
 #SampleName = 'test'
 
@@ -101,12 +101,13 @@ for num,i in enumerate(Targetfile):
         #continue
 
     Image = pims.open(folder+i)
-    Split_FileName = i.rsplit('.seq')
+    ImShape = np.shape(Image[0])
+    Split_FileName = i.rsplit('.')
     Sample = Split_FileName[0]
     print("File: ",num, i)
-    print("     Frame Shape", Image._shape)
+    print("     Frame Shape", np.shape(Image))
     print("     Image type: ", Image.pixel_type)
-    print("     Frame Counts: ", Image._image_count)
+    print("     Frame Counts: ", len(Image))
 
     ImageSTD = np.std(Image[:], axis=0)
     ThreImage = ImageSTD > np.mean(ImageSTD) + 7*np.std(ImageSTD)
@@ -134,9 +135,9 @@ for num,i in enumerate(Targetfile):
         #ax.scatter(center[1],center[0],facecolors='none',edgecolor='g')
         ROIName = '-Bead-'+str("{:0>2d}".format(label))
         KeyLabel = Sample+ROIName
-        print("    KeyLabel: ", KeyLabel)
         bead_xy = np.array([np.int(center[1]), np.int(center[0])])
-        if BA.EdgeTest(bead_xy,Image._shape,Extensize= window_size):
+        if BA.EdgeTest(bead_xy,ImShape,Extensize= window_size):
+            print("     ", KeyLabel)
             Bead_P = BA.GetBeadsPosition(folder, [i], window_size, bead_xy, ImageSave=False, Bead_label=ROIName)
             Position_sheet = pd.DataFrame(Bead_P,columns=['Frames','DateTime', 'x-Center', 'y-Center'])
             Position_sheet = Position_sheet.infer_objects()
@@ -146,7 +147,7 @@ for num,i in enumerate(Targetfile):
             title = "{:.1f}".format(Speed_Sheet.loc[0,"Speed(Hz)"]) + "Hz"\
                     +", AR:" + "{:.1f}".format(Speed_Sheet.loc[0,"AspectRatio"]) \
                     +", Eccen:"+"{:.1f}".format(Speed_Sheet.loc[0,"Eccentricity"])\
-                    +"\n, FT_amp:"+"{:.2f}".format(Speed_Sheet.loc[0,"FFT_amp"]) \
+                    +"\n, Radius:"+"{:.2f}".format(Speed_Sheet.loc[0,"Radius"]) \
                     +", Ell_Q:"+"{:.1f}".format(Speed_Sheet.loc[0,"e-FitQaulity"])
             filepath = FigFolder + KeyLabel + ".jpg"
             #DrawTrace function need to modify.
