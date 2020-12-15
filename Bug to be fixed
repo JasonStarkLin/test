@@ -1,0 +1,7 @@
+
+SpeedDistribtuion
+    1. "Filename Extension" should be exclude when exporting results.
+    2. Image data type need to modify to 16 bit or automatically detection.
+    3. BA.GetBeadsPosition-->ImageSave -> should be optimized.
+    4. Bead_label exporting size should be changed automatically.
+    5. Add one more results to the results. (FFT peak)
