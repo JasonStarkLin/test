@@ -62,10 +62,13 @@ def ExFolderConstr(Con_folder):
 
 
 
-folder = "D:\\NAS-TEMP_BE\\SpeedDistribution Debug\\"
-SampleName = 'Debug results'
+folder = "X:\\Raw Data\\2020\\20201215\\Speed Distribution\\"
+ExpFolder = "X:\\Analyzed Data\\YS1294-SpeedDistribution\\"
+SampleName = '20201215-BE-Ibidi-850085'
+
 #folder = "D:\\NAS-TEMP_BE\\20200926\\Speed distribution\\"
 #SampleName = 'test'
+#ExpFolder = "D:\\NAS-TEMP_BE\\SpeedDistribution Debug\\test\\"
 
 FPS = 451
 N_frame = 450 # for one analysis section.
@@ -86,8 +89,8 @@ print(Targetfile)
 
 
 #Check and Creating the exporting file folder
-FigFolder = folder+SampleName+"-OrbitResults\\"
-B_Label_Folder = folder+SampleName+"-Bead_Label\\"
+FigFolder = ExpFolder+SampleName+"-OrbitResults\\"
+B_Label_Folder = ExpFolder+SampleName+"-Bead_Label\\"
 
 
 ExFolderConstr(FigFolder)
@@ -173,6 +176,6 @@ for num,i in enumerate(Targetfile):
 
 
 Bead_sheet = Bead_sheet.set_index("Label")
-ExpBeadFileName = folder + SampleName +'.csv'
+ExpBeadFileName = ExpFolder + SampleName +'.csv'
 Bead_sheet.to_csv(ExpBeadFileName)
 print("Cost Time: ",(time.time()-temp_time)/60," Minutes")
